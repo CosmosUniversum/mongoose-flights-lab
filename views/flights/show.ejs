@@ -1,3 +1,54 @@
 <%- include('../partials/html-head')  %> 
-<link rel="stylesheet" href="/stylesheets/movies/index.css">
 <%- include('../partials/nav')  %>
+
+<main>
+  <h1> Flight Details</h1>
+  <table id="list">
+    <thead>
+      <tr>
+        <th>Airline</th>
+        <th>Airport</th>
+        <th>Flight No</th>
+        <th>Departure date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= flight.airline %></td>
+        <td><%= flight.airport %></td>
+        <td><%= flight.flightNo %></td>
+        <td><%= flight.departs %> </td>
+      </tr>
+    </tbody>
+  </table>
+  <% if (flight.tickets.length) { %>
+    <h3>Tickets</h3>
+    <table id="list">
+      <thead>
+        <tr>
+          <th>Seat</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= flight.tickets.seat %></td>
+          <td><%= flight.tickets.price %>$</td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
+  <form 
+    id="add-ticket-form"
+    action="/flights/<%= flight._id %>/tickets"
+    method="POST"
+  >
+    <label for="seat-input">Please Enter Your Seat Number (Must be A1 - F99)</label>
+    <input name="seat" required pattern="[A-F][1-99]\d?">
+    <label for="price-input">Please Enter The Price Of The Ticket</label>
+    <input type="number" name="price" min="0">
+    <button type="submit">Add Ticket</button>
+  </form>
+</main>
+
+<%- include("../partials/footer") %>
